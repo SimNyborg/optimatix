@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+{% block nav %}{% endblock %}
+{% block content %}
+<div class="project-hero-image-wrapper">
+  <img src="/static/{{ projekt.image }}" alt="Billede af {{ projekt.title }}" class="project-hero-image">
+  <div class="project-hero-title-overlay">
+    <h1>Fra håndskrevne kommentarer til værdifuld indsigt</h1>
+  </div>
+</div>
+<div class="project-underline"></div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const line = document.querySelector('.project-underline');
+  if (line) {
+    const observer = new window.IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(line);
+  }
+});
+</script>
+<section class="project-main-content">
+  <div class="project-desc">
+    <h2>Om projektet</h2>
+    <p>Et affaldsselskab ønskede <span class="highlight">en grundig analyse</span> af borgernes oplevelser på deres mere end ti genbrugspladser. Det er dog vanskeligt i praksis, når pladserne dagligt besøges af tusindvis af brugere. Selskabet havde gode erfaringer med papirspørgeskemaer, som giver en høj svarprocent og fungerer uanset vejrforhold, men metoden skabte en tydelig udfordring: Hvordan digitaliserer man tusindvis af skemaer med håndskrevne kommentarer og krydser, som ofte lander uden for felterne?</p>
+    <p>Hidtil blev alle svar <span class="highlight">tastet manuelt ind i Excel</span>, kryds for kryds og kommentar for kommentar. Det krævede mange arbejdstimer for hver undersøgelse, og medarbejderne oplevede opgaven som ensformig.</p>
+    <p>For at afhjælpe dette udviklede vi <span class="highlight">en automatiseret løsning</span>, hvor spørgeskemaerne blot indscannes. En maskinlæringsmodel identificerer derefter både markeringer og håndskrevne tekster og overfører automatisk alle data til Excel, klar til videre analyse.</p>
+    <p>Resultatet var markant. Arbejdet blev reduceret fra omtrent en times manuel indtastning pr. 100 spørgeskemaer til cirka fem minutter, hvilket svarer til <span class="highlight">en tidsbesparelse på over 90 procent</span>. Den frigjorte tid kan nu bruges på opgaver, der skaber langt større værdi.</p>
+    <p>Derefter gennemgik vi datamaterialet for at <span class="highlight">identificere centrale indsigter</span> og udarbejdede en rapport med hovedpointer for hver genbrugsplads, suppleret af tydelige datavisualiseringer og perspektiver på, hvordan de enkelte pladser havde udviklet sig siden den forrige undersøgelse.</p>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; justify-items: center; max-width: 650px; margin: 32px auto; align-items: start;">
+      {% if projekt.gallery and projekt.gallery|length > 0 %}
+        <img src="/static/{{ projekt.gallery[0] }}" alt="Billede af {{ projekt.title }}" style="display:block; margin:auto; max-height:260px; width:auto; max-width:100%; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+      {% endif %}
+      <img src="/static/spørgeskema.jpg" alt="Spørgeskema" style="display:block; margin:auto; max-height:260px; width:auto; max-width:100%; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+      {% if projekt.gallery and projekt.gallery|length > 1 %}
+        {% if projekt.gallery|length > 1 %}
+          <img src="/static/{{ projekt.gallery[1] }}" alt="Billede af {{ projekt.title }}" style="display:block; margin:auto; max-height:220px; width:auto; max-width:100%; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+        {% endif %}
+        {% if projekt.gallery|length > 2 %}
+          <img src="/static/{{ projekt.gallery[2] }}" alt="Billede af {{ projekt.title }}" style="display:block; margin:auto; max-height:220px; width:auto; max-width:100%; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+        {% endif %}
+        {% if projekt.gallery|length > 3 %}
+          {# Render any remaining images after the first three, using the smaller bottom size #}
+          {% for img in projekt.gallery[3:] %}
+            <img src="/static/{{ img }}" alt="Billede af {{ projekt.title }}" style="display:block; margin:auto; max-height:220px; width:auto; max-width:100%; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+      <img src="/static/Excel brugerundersøgelse output.png" alt="Excel output" style="display:block; margin:auto; max-height:220px; width:auto; max-width:100%; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+      <img src="/static/graf brugerundersøgelse.png" alt="Graf" style="display:block; margin:auto; max-height:220px; width:auto; max-width:100%; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
+    </div>
+  </div>
+</section>
+
+<section class="project-cta">
+  <a href="/#kontakt" class="cta-btn">Kontakt os om lignende projekter</a>
+  <div style="margin-top: 64px;">
+    <nav class="breadcrumb"><a href="/#projekter">{{ strings.breadcrumb_back }}</a></nav>
+  </div>
+</section>
+{% endblock %} 
