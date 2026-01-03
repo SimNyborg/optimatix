@@ -303,10 +303,22 @@ p {
     opacity: 0.9;
     transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
 }
-.navbar a:not(.navbar-logo):hover::after,
-.navbar a:not(.navbar-logo):focus::after {
+.navbar a:not(.navbar-logo):hover::after {
     transform: translateX(-50%) scaleX(1);
     opacity: 1;
+}
+
+/* Keyboard focus: subtle outline instead of underline */
+.navbar a:not(.navbar-logo):focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+/* Prevent :focus state from showing underline */
+.navbar a:not(.navbar-logo):focus::after {
+    transform: translateX(-50%) scaleX(0);
+    opacity: 0;
 }
 .navbar a:hover {
     color: var(--primary-color);

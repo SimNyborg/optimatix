@@ -310,10 +310,14 @@ window.addEventListener('scroll', function() {
 });
 
 // Desktop menu links
-document.querySelectorAll('.navbar-menu a[href^="#"]').forEach(link => {
-    link.addEventListener('click', function() {
+document.querySelectorAll('.navbar-links a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
         lockNavbar(1500);
         updateNavbarBackground();
+        // Remove focus after click to hide underline
+        setTimeout(() => {
+            this.blur();
+        }, 0);
     });
 });
 
