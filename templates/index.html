@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="/static/favicon.ico">
     
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/leaflet/leaflet.css') }}">
 </head>
 <body id="top">
     
@@ -50,7 +51,9 @@
             <a href="#services">{{ strings.nav_services }}</a>
             <a href="#hvemervi">{{ strings.nav_om }}</a>
             <a href="#kontakt">{{ strings.nav_kontakt }}</a>
-            <a class="lang-switch" href="/setlang/{{ 'en' if strings.lang_code == 'da' else 'da' }}" aria-label="Skift sprog">Da/En</a>
+            <a class="lang-switch" href="/setlang/{{ 'en' if strings.lang_code == 'da' else 'da' }}" aria-label="Skift sprog">
+                {% if strings.lang_code == 'da' %}<strong>DA</strong> | EN{% else %}DA | <strong>EN</strong>{% endif %}
+            </a>
         </div>
     </nav>
     {% endblock %}
@@ -63,8 +66,8 @@
             {% if strings.lang_code == 'da' %}Din browser understøtter ikke video-tagget.{% else %}Your browser does not support the video tag.{% endif %}
         </video>
         <div class="video-overlay">
-            <h1>{{ strings.hero_h1.replace('\n','<br>')|safe }}</h1>
-            <p>{{ strings.hero_p.replace('\n','<br>')|safe }}</p>
+            <h1 id="typewriter-h1"></h1>
+            <p id="typewriter-p" style="opacity: 0;">{{ strings.hero_p.replace('\n','<br>')|safe }}</p>
         </div>
     </div>
     <!-- Projekter sektion -->
@@ -132,7 +135,7 @@
     <!-- Hvem er vi sektion -->
     <section class="founders-section" id="hvemervi">
         <h2>{{ strings.founders_h2 }}</h2>
-        <p class="founders-intro">{% if strings.lang_code == 'da' %}Optimatix blev stiftet i 2025 af Simon Nyborg med formålet at hjælpe virksomheder med at udnytte data og ny teknologi til at optimere manuelle og tidskrævende processer. Målet er at frigøre tid, så virksomheder kan fokusere på deres kerneopgaver. Optimatix’ vision er at eliminere unødvendigt, rutinepræget og værdiløst manuelt arbejde.{% else %}Optimatix was founded in 2025 by Simon Nyborg to help companies harness data and new technology to optimize manual and time-consuming processes. The goal is to free up time so businesses can focus on their core tasks. Optimatix's vision is to eliminate unnecessary, routine, and low-value manual work.{% endif %}</p>
+        <p class="founders-intro">{% if strings.lang_code == 'da' %}Optimatix blev stiftet i 2025 af Simon Nyborg med formålet at hjælpe virksomheder med at udnytte data og ny teknologi til at optimere manuelle og tidskrævende processer. Målet er at frigøre tid, så virksomheder kan fokusere på deres kerneopgaver. Optimatix' vision er at eliminere unødvendigt og værdiløst manuelt arbejde.{% else %}Optimatix was founded in 2025 by Simon Nyborg to help companies harness data and new technology to optimize manual and time-consuming processes. The goal is to free up time so businesses can focus on their core tasks. Optimatix's vision is to eliminate unnecessary and low-value manual work.{% endif %}</p>
         <div class="founders-grid">
             <a href="/founder/simon-nyborg" class="founder-card founder-link">
                 <img src="/static/Simon%20Nyborg.png" alt="Simon Nyborg" class="founder-img">
@@ -147,6 +150,62 @@
                 <p>Albert er stifter og ekspert i at kombinere sin erfaring med salg og dataanalyse for at løfte virksomheders resultater.</p>
             </a>
             -->
+        </div>
+    </section>
+
+    <section class="insights-section" id="insights">
+        <div class="insights-container">
+            <div class="insights-header">
+                <h2>Insights</h2>
+                <p class="insights-subtitle">{% if strings.lang_code == 'da' %}Et overblik over vores priser, leveringstid og tidligere leverancer.{% else %}An overview of our pricing, delivery time, and past deliveries.{% endif %}</p>
+            </div>
+            <div id="insights-status" class="insights-status">Loading charts…</div>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <h3>{% if strings.lang_code == 'da' %}Lavere timepris end markedet{% else %}Lower hourly rate than market{% endif %}</h3>
+                        <p class="insight-description">{% if strings.lang_code == 'da' %}Sammenligning af vores timepris med markedets billigste alternativer.{% else %}Comparison of our hourly rate with the market's cheapest alternatives.{% endif %}</p>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-price-hour" aria-label="{% if strings.lang_code == 'da' %}Sammenligning af timepriser{% else %}Hourly rate comparison{% endif %}"></canvas>
+                    </div>
+                    <p class="insight-fallback">{% if strings.lang_code == 'da' %}Grafen vises her, hvis JavaScript er slået til.{% else %}The chart appears here if JavaScript is enabled.{% endif %}</p>
+                </div>
+
+                <div class="insight-card card-price-range">
+                    <div class="insight-header">
+                        <h3>{% if strings.lang_code == 'da' %}Forudsigelige prisniveauer{% else %}Predictable price levels{% endif %}</h3>
+                        <p class="insight-description">{% if strings.lang_code == 'da' %}Typiske prisintervaller for udvalgte leverancer.{% else %}Typical price ranges for selected deliverables.{% endif %}</p>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-price-range" aria-label="{% if strings.lang_code == 'da' %}Prisintervaller for ydelser{% else %}Service price ranges{% endif %}"></canvas>
+                    </div>
+                    <p class="insight-footnote">{% if strings.lang_code == 'da' %}* Pris afhænger af scope og integrationer.{% else %}* Price depends on scope and integrations.{% endif %}</p>
+                    <p class="insight-fallback">{% if strings.lang_code == 'da' %}Grafen vises her, hvis JavaScript er slået til.{% else %}The chart appears here if JavaScript is enabled.{% endif %}</p>
+                </div>
+
+                    <div class="insight-card">
+                    <div class="insight-header">
+                        <h3>{% if strings.lang_code == 'da' %}Samme projekt – ca. 3 uger hurtigere levering{% else %}Same project – ~3 weeks faster delivery{% endif %}</h3>
+                        <p class="insight-description">{% if strings.lang_code == 'da' %}Illustrativ sammenligning for samme projekttype og scope.{% else %}Illustrative comparison for same project type and scope.{% endif %}</p>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-faster" aria-label="{% if strings.lang_code == 'da' %}Sammenligning af leveringstid{% else %}Delivery time comparison{% endif %}"></canvas>
+                    </div>
+                    <p class="insight-note">{% if strings.lang_code == 'da' %}≈ 3 uger sparet.{% else %}≈ 3 weeks saved.{% endif %}</p>
+                    <p class="insight-fallback">{% if strings.lang_code == 'da' %}Grafen vises her, hvis JavaScript er slået til.{% else %}The chart appears here if JavaScript is enabled.{% endif %}</p>
+                </div>
+
+                <div class="insight-card">
+                    <div class="insight-header">
+                        <h3>{% if strings.lang_code == 'da' %}Leverancer i hele Danmark{% else %}Deliveries across Denmark{% endif %}</h3>
+                        <p class="insight-description">{% if strings.lang_code == 'da' %}Byer hvor vi har leveret projekter.{% else %}Cities where we have delivered projects.{% endif %}</p>
+                    </div>
+                    <!-- Map tiles via OpenStreetMap; skift til egen/udbyder ved høj trafik for at respektere fair-use. -->
+                    <div id="dk-map" aria-label="{% if strings.lang_code == 'da' %}Danmarkskort med markører{% else %}Denmark map with markers{% endif %}"></div>
+                    <p class="insight-fallback">{% if strings.lang_code == 'da' %}Kortet vises her, hvis JavaScript er slået til.{% else %}The map appears here if JavaScript is enabled.{% endif %}</p>
+                </div>
+            </div>
         </div>
     </section>
     <!-- Kontakt sektion -->
@@ -196,24 +255,68 @@
         </div>
     </footer>
     {% endblock %}
-</body>
+
+    <script defer src="{{ url_for('static', filename='vendor/chartjs/chart.umd.min.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='vendor/leaflet/leaflet.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/insights.js') }}"></script>
+    <script>console.log("Bottom scripts reached");</script>
 <script>
 let lastScrollY = window.scrollY;
 const navbar = document.querySelector('.navbar');
-window.addEventListener('scroll', function() {
-    if (window.scrollY > lastScrollY && window.scrollY > 50) {
-        navbar.classList.add('navbar-hidden');
-    } else {
-        navbar.classList.remove('navbar-hidden');
-    }
-    // Add background when not at top
+let navAutoScrollLockUntil = 0;
+
+// Helper til at opdatere navbar baggrund baseret på scroll position
+function updateNavbarBackground() {
     if (window.scrollY > 10) {
         navbar.classList.add('navbar-scrolled');
     } else {
         navbar.classList.remove('navbar-scrolled');
     }
+}
+
+// Helper til at låse navbar synlig under programmatic scroll
+function lockNavbar(ms = 1200) {
+    navAutoScrollLockUntil = Date.now() + ms;
+    navbar.classList.remove('navbar-hidden');
+    updateNavbarBackground();
+}
+
+// Hook scrollIntoView globalt så navbar altid låses ved programmatic scroll
+const _scrollIntoView = Element.prototype.scrollIntoView;
+Element.prototype.scrollIntoView = function(...args) {
+    lockNavbar(1500);
+    return _scrollIntoView.apply(this, args);
+};
+
+window.addEventListener('scroll', function() {
+    // Under lock: hold navbar synlig men opdatér baggrund
+    if (Date.now() < navAutoScrollLockUntil) {
+        navbar.classList.remove('navbar-hidden');
+        updateNavbarBackground();
+        lastScrollY = window.scrollY;
+        return;
+    }
+    
+    // Normal scroll-adfærd: skjul ved scroll ned
+    if (window.scrollY > lastScrollY && window.scrollY > 50) {
+        navbar.classList.add('navbar-hidden');
+    } else {
+        navbar.classList.remove('navbar-hidden');
+    }
+    
+    // Opdatér baggrund baseret på position
+    updateNavbarBackground();
     lastScrollY = window.scrollY;
 });
+
+// Desktop menu links
+document.querySelectorAll('.navbar-menu a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function() {
+        lockNavbar(1500);
+        updateNavbarBackground();
+    });
+});
+
 const burger = document.getElementById('navbar-burger');
 const mobileMenu = document.getElementById('navbar-mobile-menu');
 burger.addEventListener('click', function() {
@@ -225,6 +328,11 @@ document.querySelectorAll('.navbar-mobile-menu a').forEach(link => {
     link.addEventListener('click', function() {
         mobileMenu.classList.remove('open');
         burger.classList.remove('open');
+        // Lås navbar hvis det er et sektion-link
+        if (this.getAttribute('href').startsWith('#')) {
+            lockNavbar(1500);
+            updateNavbarBackground();
+        }
     });
 });
 // Luk mobilmenuen hvis man scroller, mens den er åben
@@ -294,6 +402,38 @@ window.addEventListener('load', function() {
     projectsCarousel.scrollLeft = 0;
   }
 });
+
+// Fjern # fra URL når man klikker på menu-links, men bevar smooth scrolling
+document.addEventListener('DOMContentLoaded', function() {
+  const navLinks = document.querySelectorAll('a[href^="#"]');
+  
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      
+      // Hvis det er et anker-link (starter med #)
+      if (href && href !== '#top' && href.startsWith('#')) {
+        e.preventDefault();
+        
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          // Scroll til elementet
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+          
+          // Lukk mobile menu hvis den er åben
+          const mobileMenu = document.getElementById('navbar-mobile-menu');
+          if (mobileMenu && mobileMenu.classList.contains('open')) {
+            mobileMenu.classList.remove('open');
+            const burger = document.getElementById('navbar-burger');
+            if (burger) burger.setAttribute('aria-expanded', 'false');
+          }
+        }
+      }
+    });
+  });
+});
 </script>
 <script>
 // Dansk valideringsbesked for nyhedsbrev-email
@@ -330,5 +470,45 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Typewriter effect for hero text
+document.addEventListener('DOMContentLoaded', function() {
+    const h1Element = document.getElementById('typewriter-h1');
+    const pElement = document.getElementById('typewriter-p');
+    const h1Text = {{ strings.hero_h1|tojson }};
+    
+    let charIndex = 0;
+    let lineIndex = 0;
+    const lines = h1Text.split('\n');
+    
+    function typeWriter() {
+        if (lineIndex < lines.length) {
+            const currentLine = lines[lineIndex];
+            
+            if (charIndex < currentLine.length) {
+                if (charIndex === 0 && lineIndex > 0) {
+                    h1Element.innerHTML += '<br>';
+                }
+                h1Element.innerHTML += currentLine.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 50); // Hastighed mellem tegn (ms)
+            } else {
+                charIndex = 0;
+                lineIndex++;
+                setTimeout(typeWriter, 200); // Pause mellem linjer
+            }
+        } else {
+            // Når h1 er færdig, vis p-teksten
+            setTimeout(function() {
+                pElement.style.transition = 'opacity 1s';
+                pElement.style.opacity = '1';
+            }, 300);
+        }
+    }
+    
+    // Start typewriter effekt efter kort pause
+    setTimeout(typeWriter, 500);
+});
 </script>
+</body>
 </html> 
