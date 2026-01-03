@@ -177,7 +177,7 @@
     const ctx = canvas.getContext('2d');
     const chartData = {
       labels: [
-        'Automatiseringsflow',
+        'Dataautomatisering',
         'Simpel hjemmeside',
         'Forecasting model',
         'Simpel app',

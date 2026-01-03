@@ -416,7 +416,7 @@ html {
 }
 .insights-header h2 {
     font-size: 2.5em;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 12px;
     color: var(--text-primary);
 }
@@ -514,6 +514,7 @@ html {
     }
     .insights-header h2 {
         font-size: 2em;
+        font-weight: 700 !important;
     }
 }
     background: var(--bg-secondary);
@@ -1976,8 +1977,10 @@ html {
 }
 
 #insights .insights-header h2 {
-  font-size: 2em;
-  margin-bottom: 8px !important;
+  font-size: 2.2em !important;
+  font-weight: 700 !important;
+  margin-bottom: 40px !important;
+  text-align: center !important;
 }
 
 #insights .insights-subtitle {
