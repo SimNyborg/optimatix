@@ -1409,6 +1409,21 @@ html {
     .video-overlay p {
         padding: 0 18px;
     }
+}
+
+/* Ekstra justering for små mobil-skærme (smartphones) */
+@media (max-width: 480px) {
+    .video-overlay h1 {
+        font-size: 2.1em;
+        line-height: 1.2;
+    }
+}
+
+@media (max-width: 380px) {
+    .video-overlay h1 {
+        font-size: 1.85em;
+        line-height: 1.25;
+    }
     .founder-readmore {
         width: calc(100% - 36px);
         margin-left: 18px;
