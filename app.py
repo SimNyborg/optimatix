@@ -184,5 +184,59 @@ def projekt_detail(projekt_id):
         return render_template('projekt_en.html', projekt=projekt, year=datetime.now().year)
     return render_template('projekt.html', projekt=projekt, year=datetime.now().year)
 
+# SEO: robots.txt
+@app.route('/robots.txt')
+def robots():
+    return "User-agent: *\nAllow: /\nSitemap: https://optimatix.dk/sitemap.xml", 200, {'Content-Type': 'text/plain; charset=utf-8'}
+
+# SEO: sitemap.xml
+@app.route('/sitemap.xml')
+def sitemap():
+    base_url = 'https://optimatix.dk'
+    today = datetime.now().strftime('%Y-%m-%d')
+    
+    urls = [
+        ('/', 'weekly', '1.0'),
+    ]
+    
+    # Services
+    services = [
+        '/services/dataanalyse',
+        '/services/forretningsudvikling',
+        '/services/automatisering',
+        '/services/it-produktudvikling',
+    ]
+    for service in services:
+        urls.append((service, 'monthly', '0.8'))
+    
+    # Projects
+    for projekt_id in dummy_projects.keys():
+        urls.append((f'/projekter/{projekt_id}', 'monthly', '0.7'))
+    
+    # Legal/Info pages
+    info_pages = [
+        '/privatliv',
+        '/cookies',
+        '/vilkar',
+    ]
+    for page in info_pages:
+        urls.append((page, 'yearly', '0.5'))
+    
+    # Build XML
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    
+    for path, changefreq, priority in urls:
+        xml += '  <url>\n'
+        xml += f'    <loc>{base_url}{path}</loc>\n'
+        xml += f'    <lastmod>{today}</lastmod>\n'
+        xml += f'    <changefreq>{changefreq}</changefreq>\n'
+        xml += f'    <priority>{priority}</priority>\n'
+        xml += '  </url>\n'
+    
+    xml += '</urlset>'
+    
+    return xml, 200, {'Content-Type': 'application/xml; charset=utf-8'}
+
 if __name__ == '__main__':
     app.run(debug=True) 
