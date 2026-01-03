@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, request, redirect
+from flask import Flask, render_template, send_from_directory, request, redirect, Response
 from datetime import datetime
 
 app = Flask(__name__)
@@ -236,7 +236,7 @@ def sitemap():
     
     xml += '</urlset>'
     
-    return xml, 200, {'Content-Type': 'application/xml; charset=utf-8'}
+    return Response(xml, mimetype='application/xml')
 
 if __name__ == '__main__':
     app.run(debug=True) 
