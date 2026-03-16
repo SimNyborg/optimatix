@@ -1363,10 +1363,17 @@ html {
         margin-bottom: 18px;
     }
     .services-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 14px;
     }
     .service-card {
         padding: 18px 8px 12px 8px;
+    }
+    .service-card h3 {
+        font-size: 0.9em;
+    }
+    .service-card p {
+        font-size: 0.8em;
     }
     .service-icon {
         font-size: 2em;

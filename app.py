@@ -12,7 +12,7 @@ translations = {
         'nav_kontakt': 'Kontakt',
         'hero_h1': 'Aautomatisering, analyser og digitale løsninger',
         'hero_p': 'Vi hjælper virksomheder med at bygge digitale løsninger, der effektiviserer arbejdsgange og styrker beslutninger med data.',
-        'projects_h2': 'Projektportefølje',
+        'projects_h2': 'Vores projekter',
         'projects_subheading': 'Et udvalg af projekter, der har gjort vores kunder mere effektive, så de kan bruge tiden på det, de er bedst til.',
         'services_h2': 'Vores Services',
         'services_subheading': 'Vi er specialister i datadrevet procesoptimering og implementering af effektive løsninger. Hvert projekt er unikt – kontakt os, så finder vi den rette løsning til din virksomhed.',
