@@ -2,6 +2,127 @@
   let chartsInitialized = false;
   let mapInitialized = false;
   let initScheduled = false;
+  let insightsMap = null;
+  const MOBILE_BREAKPOINT = 640;
+
+  const isCompactCard = (width) => width < 220;
+
+  function closeAllInfoPopovers() {
+    document.querySelectorAll('#insights .insight-card.info-open').forEach((card) => {
+      card.classList.remove('info-open');
+    });
+  }
+
+  function setupMobileInfoToggles() {
+    const isMobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
+    const cards = [...document.querySelectorAll('#insights .insight-card')];
+
+    cards.forEach((card) => {
+      const description = card.querySelector('.insight-description');
+      const note = card.querySelector('.insight-note');
+      const footnote = card.querySelector('.insight-footnote');
+      const existingBtn = card.querySelector('.insight-info-btn');
+      const existingPopover = card.querySelector('.insight-info-popover');
+
+      const infoTexts = [description, note, footnote]
+        .filter(Boolean)
+        .map((el) => el.textContent.trim())
+        .filter(Boolean);
+
+      if (!infoTexts.length) {
+        return;
+      }
+
+      if (isMobile) {
+        card.classList.add('mobile-info-enabled');
+
+        if (!existingBtn) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'insight-info-btn';
+          btn.setAttribute('aria-label', 'Vis beskrivelse');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.textContent = 'i';
+
+          btn.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isOpen = card.classList.contains('info-open');
+            closeAllInfoPopovers();
+            if (!isOpen) {
+              card.classList.add('info-open');
+              btn.setAttribute('aria-expanded', 'true');
+            } else {
+              btn.setAttribute('aria-expanded', 'false');
+            }
+          });
+
+          card.appendChild(btn);
+        }
+
+        if (!existingPopover) {
+          const popover = document.createElement('div');
+          popover.className = 'insight-info-popover';
+          popover.innerHTML = infoTexts
+            .map((txt) => `<p>${txt}</p>`)
+            .join('');
+          card.appendChild(popover);
+        } else {
+          existingPopover.innerHTML = infoTexts
+            .map((txt) => `<p>${txt}</p>`)
+            .join('');
+        }
+      } else {
+        card.classList.remove('mobile-info-enabled');
+        card.classList.remove('info-open');
+        if (existingBtn) existingBtn.remove();
+        if (existingPopover) existingPopover.remove();
+      }
+    });
+  }
+
+  function enforceMobileSquareFrames() {
+    const isMobile = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
+    const chartFrames = [...document.querySelectorAll('#insights .chart-wrapper')];
+    const mapEl = document.getElementById('dk-map');
+
+    chartFrames.forEach((el) => {
+      if (isMobile) {
+        const width = el.getBoundingClientRect().width;
+        if (width > 0) {
+          const size = Math.round(width);
+          el.style.setProperty('width', `${size}px`, 'important');
+          el.style.setProperty('height', `${size}px`, 'important');
+          el.style.setProperty('min-height', '0', 'important');
+          el.style.setProperty('margin-left', 'auto');
+          el.style.setProperty('margin-right', 'auto');
+        }
+      } else {
+        el.style.removeProperty('width');
+        el.style.removeProperty('height');
+        el.style.removeProperty('min-height');
+        el.style.removeProperty('margin-left');
+        el.style.removeProperty('margin-right');
+      }
+    });
+
+    if (mapEl) {
+      if (isMobile) {
+        const width = mapEl.getBoundingClientRect().width;
+        if (width > 0) {
+          const size = Math.round(width);
+          mapEl.style.setProperty('height', `${size}px`, 'important');
+          mapEl.style.setProperty('min-height', '0', 'important');
+        }
+      } else {
+        mapEl.style.removeProperty('height');
+        mapEl.style.removeProperty('min-height');
+      }
+    }
+
+    if (insightsMap) {
+      setTimeout(() => insightsMap.invalidateSize(), 0);
+    }
+  }
 
   const statusEl = () => document.getElementById('insights-status');
   const setStatus = (txt) => { const el = statusEl(); if (el) el.textContent = txt; };
@@ -76,9 +197,12 @@
         if (bar) {
           const value = chart.data.datasets[0].data[0];
           const text = `${value} kr`;
+          const compact = isCompactCard(chart.width);
           
           ctx.save();
-          ctx.font = '400 10px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+          ctx.font = compact
+            ? '400 8px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+            : '400 10px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
           ctx.fillStyle = 'rgba(31, 41, 55, 0.7)';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'bottom';
@@ -115,12 +239,17 @@
           },
         },
         onResize: (chart, size) => {
-          // Dynamisk rotation og font size baseret på chart width
+          // Scale labels proportionally for narrow mobile cards.
           const width = size.width;
-          const isSmall = width < 420;
-          chart.options.scales.x.ticks.maxRotation = isSmall ? 25 : 0;
-          chart.options.scales.x.ticks.minRotation = isSmall ? 25 : 0;
-          chart.options.scales.x.ticks.font.size = isSmall ? 11 : 12;
+          const compact = isCompactCard(width);
+          const small = width < 320;
+          chart.options.scales.x.ticks.maxRotation = compact ? 32 : (small ? 20 : 0);
+          chart.options.scales.x.ticks.minRotation = compact ? 32 : (small ? 20 : 0);
+          chart.options.scales.x.ticks.font.size = compact ? 8 : (small ? 10 : 12);
+          chart.options.scales.y.ticks.font.size = compact ? 8 : 11;
+          chart.options.scales.y.title.font.size = compact ? 9 : 12;
+          chart.options.layout.padding.right = compact ? 2 : 8;
+          chart.options.layout.padding.bottom = compact ? 2 : 8;
           chart.update('none');
         },
         plugins: {
@@ -175,12 +304,23 @@
     const canvas = document.getElementById('chart-price-range');
     if (!canvas) throw new Error('Missing canvas #chart-price-range');
     const ctx = canvas.getContext('2d');
+    const fullLabels = [
+      'Automatisering',
+      'Simpel hjemmeside',
+      'Forecasting model',
+      'Simpel app',
+    ];
+    const compactLabels = [
+      'Automatisering',
+      'Hjemmeside',
+      'Forecast',
+      'Simpel app',
+    ];
+    const useCompactLabels = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
+
     const chartData = {
       labels: [
-        'Automatisering',
-        'Simpel hjemmeside',
-        'Forecasting model',
-        'Simpel app',
+        ...(useCompactLabels ? compactLabels : fullLabels),
       ],
       datasets: [
         {
@@ -217,6 +357,10 @@
           legend: { display: false },
           tooltip: {
             callbacks: {
+              title: (context) => {
+                const index = context[0]?.dataIndex ?? 0;
+                return fullLabels[index] || '';
+              },
               label: (ctx) => {
                 const [min, max] = ctx.raw;
                 return `${min.toLocaleString('da-DK')} – ${max.toLocaleString('da-DK')} kr`;
@@ -237,6 +381,7 @@
               autoSkip: true,
               maxTicksLimit: 5,
               padding: 6,
+              font: { size: useCompactLabels ? 9 : 11 },
               callback: (value) => {
                 if (value >= 1000) {
                   return `${(value / 1000).toFixed(0)}k`;
@@ -249,12 +394,15 @@
           y: {
             grid: { display: false },
             ticks: {
-              padding: 8,
+              padding: useCompactLabels ? 4 : 8,
               color: '#1f2937',
-              font: { size: 11, weight: '500' },
+              font: { size: useCompactLabels ? 9 : 11, weight: '500' },
               callback: function(value) {
                 const label = chartData.labels[value];
                 if (!label) return '';
+                if (useCompactLabels) {
+                  return label;
+                }
                 // Splitter lange labels i 2 linjer
                 if (label.length > 20) {
                   const parts = label.split(' ');
@@ -290,6 +438,13 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        onResize: (chart, size) => {
+          const compact = isCompactCard(size.width);
+          chart.options.scales.y.ticks.font.size = compact ? 8 : 11;
+          chart.options.scales.y.title.font.size = compact ? 9 : 12;
+          chart.options.scales.x.ticks.font = { size: compact ? 9 : 11, weight: '500' };
+          chart.update('none');
+        },
         plugins: {
           legend: { display: false },
           tooltip: {
@@ -393,6 +548,7 @@
         .bindPopup(`${city.name} – Leverede projekter`);
     });
 
+    insightsMap = map;
     mapInitialized = true;
   }
 
@@ -406,8 +562,15 @@
       const section = document.getElementById('insights');
       if (section) hideFallbacks(section);
 
+      setupMobileInfoToggles();
+
+      // Force square frames on mobile before rendering charts/map.
+      enforceMobileSquareFrames();
+
       initCharts();
       initMap();
+      // Run again after render to handle final layout width.
+      enforceMobileSquareFrames();
       if (chartsInitialized && mapInitialized) {
         // Skjul status når alt er klar
         const statusEl = document.getElementById('insights-status');
@@ -435,6 +598,26 @@
           console.warn('[Insights] #insights section not found');
           return;
         }
+
+        enforceMobileSquareFrames();
+        setupMobileInfoToggles();
+
+        let resizeRaf = null;
+        window.addEventListener('resize', () => {
+          if (resizeRaf) cancelAnimationFrame(resizeRaf);
+          resizeRaf = requestAnimationFrame(() => {
+            enforceMobileSquareFrames();
+            setupMobileInfoToggles();
+          });
+        });
+
+        document.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof Element)) return;
+          if (!target.closest('#insights .insight-card')) {
+            closeAllInfoPopovers();
+          }
+        });
 
         // IntersectionObserver init
         if ('IntersectionObserver' in window) {

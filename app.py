@@ -10,8 +10,8 @@ translations = {
         'nav_services': 'Services',
         'nav_om': 'Om os',
         'nav_kontakt': 'Kontakt',
-        'hero_h1': 'Aautomatisering, analyser og digitale løsninger',
-        'hero_p': 'Vi hjælper virksomheder med at bygge digitale løsninger, der effektiviserer arbejdsgange og styrker beslutninger med data.',
+        'hero_h1': 'Automatisering, analyser og digitale løsninger',
+        'hero_p': 'Vi bygger digitale løsninger, der effektiviserer arbejdsgange og styrker beslutninger med data.',
         'projects_h2': 'Vores projekter',
         'projects_subheading': 'Et udvalg af projekter, der har gjort vores kunder mere effektive, så de kan bruge tiden på det, de er bedst til.',
         'services_h2': 'Vores Services',
@@ -27,11 +27,11 @@ translations = {
     'en': {
         'nav_projekter': 'Projects',
         'nav_services': 'Services',
-        'nav_om': 'About',
+        'nav_om': 'About us',
         'nav_kontakt': 'Contact',
-        'hero_h1': 'Measurable results\nwith data as the driver',
-        'hero_p': 'We help companies optimize and scale through data-driven decisions.\nWe combine data, business and technology to create measurable improvements.\nNo standard packages, only tailored results.',
-        'projects_h2': 'Project portfolio',
+        'hero_h1': 'Automation, analytics and digital solutions',
+        'hero_p': 'We build digital solutions that streamline workflows and strengthen data-driven decision-making.',
+        'projects_h2': 'Our projects',
         'projects_subheading': 'A selection of projects that have made our customers more efficient, allowing them to focus on what they do best.',
         'services_h2': 'Our Services',
         'services_subheading': 'We specialize in data-driven process optimization and implementation of effective solutions. Every project is unique – contact us and we\'ll find the right solution for your business.',
@@ -90,14 +90,23 @@ def founder_albert():
 # Footer info pages
 @app.route('/privatliv')
 def privatliv():
+    lang = request.cookies.get('site_lang', 'da')
+    if lang == 'en':
+        return render_template('privatliv_en.html', year=datetime.now().year)
     return render_template('privatliv.html', year=datetime.now().year)
 
 @app.route('/cookies')
 def cookies():
+    lang = request.cookies.get('site_lang', 'da')
+    if lang == 'en':
+        return render_template('cookies_en.html', year=datetime.now().year)
     return render_template('cookies.html', year=datetime.now().year)
 
 @app.route('/vilkar')
 def vilkar():
+    lang = request.cookies.get('site_lang', 'da')
+    if lang == 'en':
+        return render_template('vilkar_en.html', year=datetime.now().year)
     return render_template('vilkar.html', year=datetime.now().year)
 
 # Service pages

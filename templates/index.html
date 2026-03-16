@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Automatisering & analyse for virksomheder | Datara{% endblock %}</title>
+    <title>{% block title %}{% if strings.lang_code == 'da' %}Automatisering & analyse for virksomheder | Datara{% else %}Automation & analytics for businesses | Datara{% endif %}{% endblock %}</title>
     {% block meta_description %}
-    <meta name="description" content="Vi hjælper virksomheder med Automatisering, analyser og digitale løsninger, der effektiviserer arbejdsgange og styrker beslutninger.">
+    <meta name="description" content="{% if strings.lang_code == 'da' %}Vi hjælper virksomheder med Automatisering, analyser og digitale løsninger, der effektiviserer arbejdsgange og styrker beslutninger.{% else %}We help businesses with automation, analytics and digital solutions that streamline workflows and strengthen decision-making.{% endif %}">
     {% endblock %}
     
     <!-- Favicon (served from static/) -->
@@ -15,7 +15,7 @@
     <link rel="manifest" href="/static/site.webmanifest">
     <link rel="shortcut icon" href="/static/favicon.ico">
     
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css?v=insights-gap-equalized-20260316">
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/leaflet/leaflet.css') }}">
 </head>
 <body id="top">
@@ -42,7 +42,7 @@
             <span></span>
         </button>
         <!-- Language flag button placed at the end of the navbar so it sits at the far right -->
-        <a class="lang-switch" href="/setlang/{{ 'en' if strings.lang_code == 'da' else 'da' }}" aria-label="Skift sprog">
+        <a class="lang-switch" href="/setlang/{{ 'en' if strings.lang_code == 'da' else 'da' }}" aria-label="{% if strings.lang_code == 'da' %}Skift sprog{% else %}Switch language{% endif %}">
             {% if strings.lang_code == 'da' %}
             <svg width="28" height="20" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true"><clipPath id="t"><rect width="60" height="30" rx="2"/></clipPath><g clip-path="url(#t)"><rect width="60" height="30" fill="#012169"/><path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0 L60 30 M60 0 L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0 L30 30 M0 15 L60 15" stroke="#fff" stroke-width="10"/><path d="M30 0 L30 30 M0 15 L60 15" stroke="#C8102E" stroke-width="6"/></g></svg>
             {% else %}
@@ -54,7 +54,7 @@
             <a href="#services">{{ strings.nav_services }}</a>
             <a href="#hvemervi">{{ strings.nav_om }}</a>
             <a href="#kontakt">{{ strings.nav_kontakt }}</a>
-            <a class="lang-switch" href="/setlang/{{ 'en' if strings.lang_code == 'da' else 'da' }}" aria-label="Skift sprog">
+            <a class="lang-switch" href="/setlang/{{ 'en' if strings.lang_code == 'da' else 'da' }}" aria-label="{% if strings.lang_code == 'da' %}Skift sprog{% else %}Switch language{% endif %}">
                 {% if strings.lang_code == 'da' %}<strong>DA</strong> | EN{% else %}DA | <strong>EN</strong>{% endif %}
             </a>
         </div>
@@ -64,12 +64,8 @@
     
     {% block content %}
     <div class="video-background">
-        <video autoplay loop muted playsinline id="bg-video">
-            <source src="/static/coding-bg.mp4.mp4" type="video/mp4">
-            {% if strings.lang_code == 'da' %}Din browser understøtter ikke video-tagget.{% else %}Your browser does not support the video tag.{% endif %}
-        </video>
         <div class="video-overlay">
-            <h1 id="typewriter-h1"></h1>
+            <h1 id="typewriter-h1" data-text="{{ strings.hero_h1 }}"></h1>
             <p id="typewriter-p" style="opacity: 0;">{{ strings.hero_p.replace('\n','<br>')|safe }}</p>
         </div>
     </div>
@@ -159,7 +155,7 @@
     <section class="insights-section" id="insights">
         <div class="insights-container">
             <div class="insights-header">
-                <h2>Insights</h2>
+                <h2>{% if strings.lang_code == 'da' %}Indsigt{% else %}Insights{% endif %}</h2>
                 <p class="insights-subtitle">{% if strings.lang_code == 'da' %}Et overblik over vores priser, leveringstid og tidligere leverancer.{% else %}An overview of our pricing, delivery time, and past deliveries.{% endif %}</p>
             </div>
             <div id="insights-status" class="insights-status">Loading charts…</div>
@@ -241,7 +237,7 @@
                     <label for="newsletter-email"><strong>{{ strings.newsletter_label }}</strong></label>
                     <p>{% if strings.lang_code == 'da' %}Få nyheder og indsigter direkte i din indbakke{% else %}Receive news and insights directly to your inbox{% endif %}</p>
                     <div class="newsletter-row">
-                        <input type="email" id="newsletter-email" name="email" placeholder="{% if strings.lang_code == 'da' %}Email adresse{% else %}Email address{% endif %}" required>
+                        <input type="email" id="newsletter-email" name="email" placeholder="{% if strings.lang_code == 'da' %}Email adresse{% else %}Email address{% endif %}" data-msg-missing="{% if strings.lang_code == 'da' %}Indtast din e-mailadresse.{% else %}Please enter your email address.{% endif %}" data-msg-type-mismatch="{% if strings.lang_code == 'da' %}Indtast en gyldig e-mailadresse (f.eks. nav@domæne.dk).{% else %}Please enter a valid email address (for example: name@domain.com).{% endif %}" data-msg-invalid="{% if strings.lang_code == 'da' %}Indtast en gyldig e-mailadresse.{% else %}Please enter a valid email address.{% endif %}" required>
                         <button type="submit">{{ strings.newsletter_button }}</button>
                     </div>
                 </form>
@@ -447,17 +443,20 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const emailInput = document.getElementById('newsletter-email');
     if (!emailInput) return;
+    const newsletterMsgMissing = emailInput.dataset.msgMissing || 'Please enter your email address.';
+    const newsletterMsgTypeMismatch = emailInput.dataset.msgTypeMismatch || 'Please enter a valid email address.';
+    const newsletterMsgInvalid = emailInput.dataset.msgInvalid || 'Please enter a valid email address.';
     const form = emailInput.closest('form');
     // Når browseren afviser inputet, sæt en dansk meddelelse
     emailInput.addEventListener('invalid', function (e) {
         // Nulstil før vi sætter ny besked
         emailInput.setCustomValidity('');
         if (emailInput.validity.valueMissing) {
-            emailInput.setCustomValidity('Indtast din e-mailadresse.');
+            emailInput.setCustomValidity(newsletterMsgMissing);
         } else if (emailInput.validity.typeMismatch) {
-            emailInput.setCustomValidity("Indtast en gyldig e-mailadresse (f.eks. nav@domæne.dk).");
+            emailInput.setCustomValidity(newsletterMsgTypeMismatch);
         } else {
-            emailInput.setCustomValidity('Indtast en gyldig e-mailadresse.');
+            emailInput.setCustomValidity(newsletterMsgInvalid);
         }
     }, false);
 
@@ -482,7 +481,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const h1Element = document.getElementById('typewriter-h1');
     const pElement = document.getElementById('typewriter-p');
-    const h1Text = {{ strings.hero_h1|tojson }};
+    const h1Text = h1Element ? (h1Element.dataset.text || '') : '';
     
     let charIndex = 0;
     let lineIndex = 0;
@@ -516,6 +515,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start typewriter effekt efter kort pause
     setTimeout(typeWriter, 500);
 });
+
 </script>
 </body>
 </html> 

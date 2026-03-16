@@ -30,6 +30,48 @@
     /* Gradient farver */
     --gradient-start: #1e40af;          /* Gradient start */
     --gradient-end: #1e3a8a;            /* Gradient slut */
+
+    /* Margin-linje styling */
+    --page-margin-line-color: var(--primary-color);
+    --page-margin-line-opacity: 0.38;
+    --page-margin-line-offset: clamp(4px, 0.9vw, 10px);
+    --page-margin-line-start: 0px;
+}
+
+@media (min-width: 1200px) {
+    :root {
+        --page-margin-line-offset: clamp(62px, 5.8vw, 130px);
+        --page-margin-line-opacity: 0.42;
+    }
+
+    .navbar-logo {
+        font-size: 2.65em !important;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1199px) {
+    :root {
+        --page-margin-line-offset: clamp(14px, 2.2vw, 26px);
+        --page-margin-line-opacity: 0.4;
+    }
+
+    .navbar-logo {
+        font-size: 2.45em !important;
+    }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+    :root {
+        --page-margin-line-offset: clamp(10px, 1.8vw, 18px);
+        --page-margin-line-opacity: 0.38;
+    }
+}
+
+@media (max-width: 700px) {
+    :root {
+        --page-margin-line-offset: 3px;
+        --page-margin-line-opacity: 0.36;
+    }
 }
 
 /* ===== ALTERNATIVE FARVETEAMER - UNCOMMENT FOR AT BRUGE ===== */
@@ -150,6 +192,45 @@ body {
     margin: 0;
     padding: 0;
     text-align: center;
+    position: relative;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+    top: var(--page-margin-line-start);
+    bottom: 0;
+    width: 1px;
+    background: var(--page-margin-line-color);
+    opacity: var(--page-margin-line-opacity);
+    pointer-events: none;
+    z-index: 20;
+}
+
+body::before {
+    left: var(--page-margin-line-offset);
+}
+
+body::after {
+    right: var(--page-margin-line-offset);
+}
+
+/* Horizontal separators between sections, bounded by side margin lines. */
+section {
+    position: relative;
+}
+
+section + section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: var(--page-margin-line-offset);
+    right: var(--page-margin-line-offset);
+    height: 1px;
+    background: var(--page-margin-line-color);
+    opacity: var(--page-margin-line-opacity);
+    pointer-events: none;
 }
 h1 {
     color: var(--text-primary);
@@ -271,13 +352,14 @@ p {
     }
 }
 .navbar-logo {
-    font-size: 1.7em !important;
+    font-size: 2.3em !important;
     font-family: 'Times New Roman', Times, serif;
     font-weight: 400;
     color: var(--text-white);
     letter-spacing: 2px;
     padding: 0 48px;
     line-height: 1;
+    white-space: nowrap;
 }
 .navbar a {
     color: var(--text-white);
@@ -330,18 +412,18 @@ p {
     overflow: hidden;
     margin: 0;
     padding: 0;
+    background: #0f172a url('/static/K%C3%B8benhavn%20baggrundsbillede%20test.jpg') center / cover no-repeat;
 }
-.video-background video {
+
+.video-background::before {
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
-    min-width: 100vw;
-    min-height: 100vh;
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     z-index: 1;
-    object-fit: cover;
-    filter: brightness(0.5);
+    background: rgba(0, 0, 0, 0.45);
 }
 .video-overlay {
     position: absolute;
@@ -350,17 +432,20 @@ p {
     transform: translate(-50%, -50%);
     z-index: 2;
     color: #fff;
-    text-align: center;
-    width: 100%;
-    padding: 0 clamp(16px, 4vw, 48px);
+    text-align: left;
+    width: min(100%, 1120px);
+    padding: 0 clamp(20px, 5vw, 64px);
     box-sizing: border-box;
 }
 .video-overlay h1 {
-    font-size: 3em;
-    margin: 0 auto 0.5em;
-    max-width: 900px;
-    line-height: 1.1;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+    font-size: clamp(2.6rem, 7.4vw, 5.4rem);
+    font-weight: 800;
+    margin: 0 0 0.32em 0;
+    max-width: 760px;
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    text-shadow: 0 6px 20px rgba(0,0,0,0.55);
     color: var(--text-white);
 }
 
@@ -378,11 +463,11 @@ p {
 
 .video-overlay p {
     font-size: 1.1em;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    text-shadow: 0 3px 12px rgba(0,0,0,0.6);
     color: var(--text-white);
     line-height: 1.5;
-    max-width: 760px;
-    margin: 0 auto;
+    max-width: 680px;
+    margin: 0;
 }
 html, body {
     overflow-x: hidden;
@@ -563,9 +648,11 @@ html {
     overflow-x: auto;
     overflow-y: visible;
     padding: 20px 0 40px 0;
+    width: calc(100% - ((var(--page-margin-line-offset) + 8px) * 2));
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto 18px auto;
     position: relative;
+    box-sizing: border-box;
 }
 .projects-carousel::before,
 .projects-carousel::after {
@@ -1284,8 +1371,10 @@ html {
     }
     .projects-carousel {
         gap: 16px;
-        padding-left: 8px;
-        padding-right: 8px;
+        width: calc(100% - ((var(--page-margin-line-offset) + 6px) * 2));
+        padding-left: 6px;
+        padding-right: 6px;
+        margin-bottom: 22px;
     }
     .project-card {
         min-width: 260px;
@@ -1346,14 +1435,24 @@ html {
         width: 100%;
     }
     .contact-info {
-        flex-direction: column;
-        gap: 16px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        max-width: 460px;
+        padding: 0 8px;
     }
     .contact-item {
         justify-content: center;
-        padding: 18px 18px;
-        margin-left: 18px;
-        margin-right: 18px;
+        padding: 14px 10px;
+        margin: 0;
+        min-width: 0;
+    }
+    .contact-item:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+    .contact-link-text {
+        overflow-wrap: anywhere;
+        font-size: 1em;
     }
     .services-section {
         padding: 32px 24px 18px 24px;
@@ -1410,8 +1509,8 @@ html {
         }
     }
     .video-overlay h1 {
-        font-size: 2.5em;
-        line-height: 1.15;
+        font-size: clamp(2.15rem, 8.8vw, 3.3rem);
+        line-height: 0.98;
     }
     .video-overlay p {
         padding: 0 18px;
@@ -1421,15 +1520,15 @@ html {
 /* Ekstra justering for små mobil-skærme (smartphones) */
 @media (max-width: 480px) {
     .video-overlay h1 {
-        font-size: 2.1em;
-        line-height: 1.2;
+        font-size: clamp(1.95rem, 9.5vw, 2.65rem);
+        line-height: 1;
     }
 }
 
 @media (max-width: 380px) {
     .video-overlay h1 {
-        font-size: 1.85em;
-        line-height: 1.25;
+        font-size: 1.78rem;
+        line-height: 1.03;
     }
     .founder-readmore {
         width: calc(100% - 36px);
@@ -1627,11 +1726,6 @@ html {
         gap: 32px;
     }
 }
-@media (min-width: 1400px) {
-    .navbar-logo {
-        font-size: 2.3em !important;
-    }
-}
 .navbar-logo-mobile {
     display: none;
 }
@@ -1669,6 +1763,67 @@ html {
 .services-section,
 .contact-section {
     background: #fafbfc;
+}
+
+#kontakt.contact-section {
+    background: #fff !important;
+}
+
+/* Front page: keep section backgrounds uniformly white. */
+#projekter.projects-section,
+#services.services-section,
+#hvemervi.founders-section,
+#insights.insights-section,
+#kontakt.contact-section {
+    background: #fff !important;
+}
+
+/* Keep equal space from each section's last element down to the blue divider line. */
+@media (min-width: 901px) {
+    #projekter.projects-section,
+    #services.services-section,
+    #hvemervi.founders-section,
+    #insights.insights-section {
+        padding-bottom: 80px !important;
+    }
+}
+
+@media (max-width: 900px) {
+    #projekter.projects-section,
+    #services.services-section,
+    #hvemervi.founders-section,
+    #insights.insights-section {
+        padding-bottom: 20px !important;
+    }
+}
+
+/* Keep equal top distance from previous divider to each section heading. */
+@media (min-width: 901px) {
+    #projekter.projects-section,
+    #services.services-section,
+    #hvemervi.founders-section,
+    #insights.insights-section,
+    #kontakt.contact-section {
+        padding-top: 80px !important;
+    }
+}
+
+@media (max-width: 900px) {
+    #projekter.projects-section,
+    #services.services-section,
+    #hvemervi.founders-section,
+    #insights.insights-section,
+    #kontakt.contact-section {
+        padding-top: 24px !important;
+    }
+}
+
+#projekter.projects-section > h2,
+#services.services-section > h2,
+#hvemervi.founders-section > h2,
+#kontakt.contact-section > h2,
+#insights.insights-section .insights-header h2 {
+    margin-top: 0 !important;
 }
 .founders-section h2,
 .projects-section h2,
@@ -1956,16 +2111,52 @@ html {
   transform: scaleX(1);
 } 
 @media (max-width: 700px) {
-  .contact-info {
-    flex-direction: column;
-    gap: 16px;
-  }
-  .contact-item {
-    justify-content: center;
-    padding: 18px 18px;
-    margin-left: 18px;
-    margin-right: 18px;
-  }
+    #kontakt .contact-info {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        max-width: 420px;
+        margin: 0 auto;
+        padding: 0 14px;
+        box-sizing: border-box;
+    }
+    #kontakt .contact-item {
+        justify-content: center;
+        padding: 12px 10px;
+        margin: 0;
+        min-width: 0;
+    }
+    /* Mobile visual order: phone + LinkedIn on first row, email on row below. */
+    #kontakt .contact-item[href^="tel:"] {
+        order: 1;
+    }
+    #kontakt .contact-item[href*="linkedin.com"] {
+        order: 2;
+        grid-column: auto;
+        justify-self: stretch;
+        width: auto;
+    }
+    #kontakt .contact-item[href^="mailto:"] {
+        order: 3;
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: min(76%, 270px);
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+    /* Prevent old nth-child-based full-width rules from affecting LinkedIn. */
+    #kontakt .contact-item {
+        grid-column: auto;
+    }
+    #kontakt .contact-item[href^="tel:"] .contact-link-text,
+    #kontakt .contact-item[href^="mailto:"] .contact-link-text {
+        font-size: clamp(0.74rem, 3vw, 0.92rem);
+        white-space: nowrap;
+    }
+    #kontakt .contact-item[href^="tel:"] .contact-icon,
+    #kontakt .contact-item[href^="mailto:"] .contact-icon {
+        font-size: 1.15em;
+    }
     .projects-subheading, .founders-intro, .contact-description {
     padding-left: 24px;
     padding-right: 24px;
@@ -1999,7 +2190,7 @@ html {
 /* === INSIGHTS LAYOUT OVERRIDE (HIGH SPECIFICITY - WINS) === */
 #insights.insights-section {
   padding: 56px 48px 36px 48px !important;
-  background: var(--bg-secondary) !important;
+    background: #fff !important;
   width: auto !important;
   margin: 0 auto !important;
 }
@@ -2036,11 +2227,47 @@ html {
 
 @media (max-width: 640px) {
   #insights .insights-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
   }
   #insights .insights-container {
-    padding: 0 16px !important;
+        padding: 0 10px !important;
+    }
+    #insights .insight-card {
+        padding: 12px 10px 10px 10px;
+        gap: 6px;
+    }
+    #insights .insight-header h3 {
+        font-size: 0.9em;
+        line-height: 1.25;
+    }
+    #insights .insight-description,
+    #insights .insight-note {
+        font-size: 0.74em;
+        line-height: 1.25;
+    }
+    #insights .insight-footnote,
+    #insights .chart-annotation,
+    #insights .insight-fallback {
+        font-size: 0.68em;
+        line-height: 1.3;
+    }
+    /* Keep chart and map frames square in mobile to avoid elongated visuals. */
+    #insights .chart-wrapper {
+        aspect-ratio: 1 / 1;
+        height: auto;
+        min-height: 120px;
+    }
+    #insights .insight-card:first-child .chart-wrapper,
+    #insights .card-price-range .chart-wrapper {
+        aspect-ratio: 1 / 1;
+        height: auto;
+        min-height: 120px;
+    }
+    #insights #dk-map {
+        aspect-ratio: 1 / 1;
+        height: auto;
+        min-height: 120px;
   }
 }
 
@@ -2053,6 +2280,75 @@ html {
   flex-direction: column;
   gap: 8px;
   color: #0f1b2e;
+    position: relative;
+}
+
+#insights .insight-info-btn {
+    display: none;
+}
+
+#insights .insight-info-popover {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    #insights .insight-card.mobile-info-enabled .insight-description {
+        display: none;
+    }
+
+    #insights .insight-card.mobile-info-enabled .insight-note,
+    #insights .insight-card.mobile-info-enabled .insight-footnote {
+        display: none;
+    }
+
+    #insights .insight-card.mobile-info-enabled .insight-info-btn {
+        position: absolute;
+        top: -9px;
+        right: -9px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 1px solid #cbd5e1;
+        background: #f8fafc;
+        color: #334155;
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 1;
+        cursor: pointer;
+        z-index: 6;
+    }
+
+    #insights .insight-card.mobile-info-enabled .insight-info-popover {
+        position: absolute;
+        top: 34px;
+        right: 8px;
+        left: 8px;
+        display: none;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+        padding: 8px 9px;
+        font-size: 0.7em;
+        line-height: 1.35;
+        color: #334155;
+        z-index: 5;
+    }
+
+    #insights .insight-card.mobile-info-enabled .insight-info-popover p {
+        margin: 0;
+    }
+
+    #insights .insight-card.mobile-info-enabled .insight-info-popover p + p {
+        margin-top: 6px;
+    }
+
+    #insights .insight-card.mobile-info-enabled.info-open .insight-info-popover {
+        display: block;
+    }
 }
 
 #insights .insight-header h3 {
@@ -2202,5 +2498,22 @@ html {
   margin: 6px 0 12px;
   text-align: center;
   color: var(--text-light);
+}
+
+/* Final mobile override: keep all insights visual frames square on phones. */
+@media (max-width: 640px) {
+    #insights .chart-wrapper,
+    #insights .insight-card:first-child .chart-wrapper,
+    #insights .card-price-range .chart-wrapper {
+        aspect-ratio: 1 / 1;
+        height: auto !important;
+        min-height: 120px;
+    }
+
+    #insights #dk-map {
+        aspect-ratio: 1 / 1;
+        height: auto !important;
+        min-height: 120px;
+    }
 }
 /* === END INSIGHTS OVERRIDE === */
