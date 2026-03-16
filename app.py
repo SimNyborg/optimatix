@@ -10,13 +10,13 @@ translations = {
         'nav_services': 'Services',
         'nav_om': 'Om os',
         'nav_kontakt': 'Kontakt',
-        'hero_h1': 'Dataautomatisering, analyser og digitale løsninger',
+        'hero_h1': 'Aautomatisering, analyser og digitale løsninger',
         'hero_p': 'Vi hjælper virksomheder med at bygge digitale løsninger, der effektiviserer arbejdsgange og styrker beslutninger med data.',
         'projects_h2': 'Projektportefølje',
         'projects_subheading': 'Et udvalg af projekter, der har gjort vores kunder mere effektive, så de kan bruge tiden på det, de er bedst til.',
         'services_h2': 'Vores Services',
         'services_subheading': 'Vi er specialister i datadrevet procesoptimering og implementering af effektive løsninger. Hvert projekt er unikt – kontakt os, så finder vi den rette løsning til din virksomhed.',
-        'founders_h2': 'Om Optimatix',
+        'founders_h2': 'Om Datara',
         'contact_h2': 'Kontakt os',
         'contact_description': 'Du er velkommen til at kontakte os for forretningshenvendelser eller spørgsmål.',
         'newsletter_label': 'Tilmeld nyhedsbrev',
@@ -35,7 +35,7 @@ translations = {
         'projects_subheading': 'A selection of projects that have made our customers more efficient, allowing them to focus on what they do best.',
         'services_h2': 'Our Services',
         'services_subheading': 'We specialize in data-driven process optimization and implementation of effective solutions. Every project is unique – contact us and we\'ll find the right solution for your business.',
-        'founders_h2': 'About Optimatix',
+        'founders_h2': 'About Datara',
         'contact_h2': 'Contact us',
         'contact_description': 'You are welcome to contact us for business inquiries or questions.',
         'newsletter_label': 'Subscribe to our newsletter',
@@ -136,7 +136,7 @@ def service_it_produktudvikling():
 # Dummy data for projekter
 dummy_projects = {
     1: {
-        'title': 'Dataautomatisering',
+        'title': 'Automatisering',
         'short_desc': 'Sådan hjalp vi en kunde med at digitalisere tusindvis af papirspørgeskemaer og spare dem mange timers manuelt arbejde på hver undersøgelse.',
         'customer': 'Kunde A',
         'date': 'Maj 2024',
@@ -187,12 +187,12 @@ def projekt_detail(projekt_id):
 # SEO: robots.txt
 @app.route('/robots.txt')
 def robots():
-    return "User-agent: *\nAllow: /\nSitemap: https://optimatix.dk/sitemap.xml", 200, {'Content-Type': 'text/plain; charset=utf-8'}
+    return "User-agent: *\nAllow: /\nSitemap: https://Datara.dk/sitemap.xml", 200, {'Content-Type': 'text/plain; charset=utf-8'}
 
 # SEO: sitemap.xml
 @app.route('/sitemap.xml')
 def sitemap():
-    base_url = 'https://optimatix.dk'
+    base_url = 'https://Datara.dk'
     today = datetime.now().strftime('%Y-%m-%d')
     
     urls = [

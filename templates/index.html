@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dataautomatisering & analyse for virksomheder | Optimatix{% endblock %}</title>
+    <title>{% block title %}Automatisering & analyse for virksomheder | Datara{% endblock %}</title>
     {% block meta_description %}
-    <meta name="description" content="Vi hjælper virksomheder med dataautomatisering, analyser og digitale løsninger, der effektiviserer arbejdsgange og styrker beslutninger.">
+    <meta name="description" content="Vi hjælper virksomheder med Automatisering, analyser og digitale løsninger, der effektiviserer arbejdsgange og styrker beslutninger.">
     {% endblock %}
     
     <!-- Favicon (served from static/) -->
@@ -23,14 +23,14 @@
     {% block nav %}
     <nav class="navbar">
         <div class="navbar-section navbar-left navbar-logo-mobile">
-            <a href="#top" class="navbar-logo">Optimatix</a>
+            <a href="#top" class="navbar-logo">Datara</a>
         </div>
         <div class="navbar-section navbar-left navbar-links">
             <a href="#projekter">{{ strings.nav_projekter }}</a>
             <a href="#services">{{ strings.nav_services }}</a>
         </div>
         <div class="navbar-section navbar-center navbar-logo-desktop">
-            <a href="#top" class="navbar-logo">Optimatix</a>
+            <a href="#top" class="navbar-logo">Datara</a>
         </div>
         <div class="navbar-section navbar-right navbar-links">
             <a href="#hvemervi">{{ strings.nav_om }}</a>
@@ -138,7 +138,7 @@
     <!-- Hvem er vi sektion -->
     <section class="founders-section" id="hvemervi">
         <h2>{{ strings.founders_h2 }}</h2>
-        <p class="founders-intro">{% if strings.lang_code == 'da' %}Optimatix blev stiftet i 2025 af Simon Nyborg med formålet at hjælpe virksomheder med at udnytte data og ny teknologi til at optimere manuelle og tidskrævende processer. Målet er at frigøre tid, så virksomheder kan fokusere på deres kerneopgaver. Optimatix' vision er at eliminere unødvendigt og værdiløst manuelt arbejde.{% else %}Optimatix was founded in 2025 by Simon Nyborg to help companies harness data and new technology to optimize manual and time-consuming processes. The goal is to free up time so businesses can focus on their core tasks. Optimatix's vision is to eliminate unnecessary and low-value manual work.{% endif %}</p>
+        <p class="founders-intro">{% if strings.lang_code == 'da' %}Datara blev stiftet i 2025 af Simon Nyborg med formålet at hjælpe virksomheder med at udnytte data og ny teknologi til at optimere manuelle og tidskrævende processer. Målet er at frigøre tid, så virksomheder kan fokusere på deres kerneopgaver. Datara' vision er at eliminere unødvendigt og værdiløst manuelt arbejde.{% else %}Datara was founded in 2025 by Simon Nyborg to help companies harness data and new technology to optimize manual and time-consuming processes. The goal is to free up time so businesses can focus on their core tasks. Datara's vision is to eliminate unnecessary and low-value manual work.{% endif %}</p>
         <div class="founders-grid">
             <a href="/founder/simon-nyborg" class="founder-card founder-link">
                 <img src="/static/Simon%20Nyborg.png" alt="Simon Nyborg" class="founder-img">
@@ -234,7 +234,7 @@
     <footer class="site-footer" id="footer">
         <div class="footer-content">
             <div class="footer-left">
-                <div class="footer-copyright">&copy; {{ year }} Optimatix I/S. {% if strings.lang_code == 'da' %}Alle rettigheder forbeholdes.{% else %}All rights reserved.{% endif %}</div>
+                <div class="footer-copyright">&copy; {{ year }} Datara I/S. {% if strings.lang_code == 'da' %}Alle rettigheder forbeholdes.{% else %}All rights reserved.{% endif %}</div>
             </div>
             <div class="footer-center">
                 <form class="footer-newsletter" action="#" method="post">

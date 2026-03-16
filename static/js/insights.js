@@ -63,15 +63,15 @@
     const ctx = canvas.getContext('2d');
     
     // Fulde navne
-    const fullNames = ['Optimatix', 'Konkurrent A', 'Konkurrent B'];
+    const fullNames = ['Datara', 'Konkurrent A', 'Konkurrent B'];
     
-    // Custom plugin til at tegne label over Optimatix-søjlen
-    const optimatixLabelPlugin = {
-      id: 'optimatixLabel',
+    // Custom plugin til at tegne label over Datara-søjlen
+    const DataraLabelPlugin = {
+      id: 'DataraLabel',
       afterDatasetsDraw: (chart) => {
         const ctx = chart.ctx;
         const meta = chart.getDatasetMeta(0);
-        const bar = meta.data[0]; // Første søjle (Optimatix)
+        const bar = meta.data[0]; // Første søjle (Datara)
         
         if (bar) {
           const value = chart.data.datasets[0].data[0];
@@ -165,7 +165,7 @@
           },
         },
       },
-      plugins: [optimatixLabelPlugin],
+      plugins: [DataraLabelPlugin],
     };
     
     const chart = new Chart(ctx, chartConfig);
@@ -177,7 +177,7 @@
     const ctx = canvas.getContext('2d');
     const chartData = {
       labels: [
-        'Dataautomatisering',
+        'Automatisering',
         'Simpel hjemmeside',
         'Forecasting model',
         'Simpel app',
@@ -277,7 +277,7 @@
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Konkurrenter', 'Optimatix'],
+        labels: ['Konkurrenter', 'Datara'],
         datasets: [
           {
             label: 'Uger (illustrativ)',

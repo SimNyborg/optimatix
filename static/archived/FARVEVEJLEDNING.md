@@ -1,4 +1,4 @@
-# 🎨 Farvevejledning - Optimatix
+# 🎨 Farvevejledning - Datara
 
 ## Hurtig Farveændring
 
