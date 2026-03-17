@@ -105,6 +105,7 @@
                 </div>
             </div>
         </div>
+        <div class="section-guide-line" aria-hidden="true"></div>
     </section>
     <!-- Services sektion -->
     <section class="services-section" id="services">
@@ -135,22 +136,28 @@
     </section>
     <!-- Hvem er vi sektion -->
     <section class="founders-section" id="hvemervi">
-        <h2>{{ strings.founders_h2 }}</h2>
-        <p class="founders-intro">{% if strings.lang_code == 'da' %}Datara blev stiftet i 2025 af Simon Nyborg med formålet at hjælpe virksomheder med at udnytte data og ny teknologi til at optimere manuelle og tidskrævende processer. Målet er at frigøre tid, så virksomheder kan fokusere på deres kerneopgaver. Datara' vision er at eliminere unødvendigt og værdiløst manuelt arbejde.{% else %}Datara was founded in 2025 by Simon Nyborg to help companies harness data and new technology to optimize manual and time-consuming processes. The goal is to free up time so businesses can focus on their core tasks. Datara's vision is to eliminate unnecessary and low-value manual work.{% endif %}</p>
-        <div class="founders-grid">
-            <a href="/founder/simon-nyborg" class="founder-card founder-link">
-                <img src="/static/Simon%20Nyborg.png" alt="Simon Nyborg" class="founder-img">
-                <div class="founder-badge">{% if strings.lang_code == 'da' %}Mød grundlæggeren{% else %}Meet the founder{% endif %}</div>
-                <h3>Simon Nyborg</h3>
-                <p>{% if strings.lang_code == 'da' %}Simon er stifter og bruger sin erfaring med data, ledelse og økonomi til at hjælpe virksomheder med at skabe effektive, datadrevne arbejdsgange.{% else %}Simon is the founder and uses his experience in data, management, and finance to help companies create efficient, data-driven workflows.{% endif %}</p>
-            </a>
-            <!-- Midlertidigt fjernet - kan tilføjes igen ved at fjerne kommentar-tags
-            <a href="/founder/albert-koba" class="founder-card founder-link">
-                <img src="/static/Albert%20Koba.jpg" alt="Albert Koba" class="founder-img">
-                <h3>Albert Koba</h3>
-                <p>Albert er stifter og ekspert i at kombinere sin erfaring med salg og dataanalyse for at løfte virksomheders resultater.</p>
-            </a>
-            -->
+        <div class="about-datara-layout">
+            <div class="about-datara-media">
+                <img src="/static/SKylab%20billede.jpg" alt="Datara skylab billede">
+                <svg class="about-path-line" viewBox="0 0 96 92" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="aboutPathThickFade" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#d58a26" stop-opacity="0.98" />
+                            <stop offset="52%" stop-color="#d58a26" stop-opacity="0.55" />
+                            <stop offset="78%" stop-color="#d58a26" stop-opacity="0.08" />
+                            <stop offset="100%" stop-color="#d58a26" stop-opacity="0" />
+                        </linearGradient>
+                    </defs>
+                    <path class="about-path-line-path about-path-line-path-thick" d="M24 0 C24 20 78 22 78 42 L78 72" />
+                    <path class="about-path-line-path about-path-line-path-thin" d="M24 0 C24 20 78 22 78 42 L78 72" />
+                </svg>
+            </div>
+            <div class="about-datara-text">
+                <h2>{{ strings.founders_h2 }}</h2>
+                <p class="founders-intro">{% if strings.lang_code == 'da' %}Datara blev stiftet i 2025 med formålet at hjælpe virksomheder med at udnytte data og ny teknologi til at optimere manuelle og tidskrævende processer. Målet er at frigøre tid, så virksomheder kan fokusere på deres kerneopgaver. Datara' vision er at eliminere unødvendigt og værdiløst manuelt arbejde.{% else %}Datara was founded in 2025 by Simon Nyborg to help companies harness data and new technology to optimize manual and time-consuming processes. The goal is to free up time so businesses can focus on their core tasks. Datara's vision is to eliminate unnecessary and low-value manual work.{% endif %}</p>
+                <a href="/founder/simon-nyborg" class="about-datara-link">{% if strings.lang_code == 'da' %}Mød grundlæggeren{% else %}Meet the founder{% endif %}</a>
+            </div>
+            <div class="about-next-line" aria-hidden="true"></div>
         </div>
     </section>
 
@@ -213,21 +220,28 @@
     SLUT PÅ INDSIGT-SEKTION -->
     <!-- Kontakt sektion -->
     <section class="contact-section" id="kontakt">
-        <h2>{{ strings.contact_h2 }}</h2>
-        <p class="contact-description">{{ strings.contact_description }}</p>
-        <div class="contact-info">
-            <a class="contact-item" href="tel:+4512345678">
-                <span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg></span>
-                <span class="contact-link-text">+45 12 34 56 78</span>
-            </a>
-            <a class="contact-item" href="mailto:simonhn02@gmail.com">
-                <span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg></span>
-                <span class="contact-link-text">simonhn02@gmail.com</span>
-            </a>
-            <a class="contact-item" href="https://www.linkedin.com/in/simon-nyborg" target="_blank">
-                <span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 50 50"><path d="M 9 4 C 6.2504839 4 4 6.2504839 4 9 L 4 41 C 4 43.749516 6.2504839 46 9 46 L 41 46 C 43.749516 46 46 43.749516 46 41 L 46 9 C 46 6.2504839 43.749516 4 41 4 L 9 4 z M 9 6 L 41 6 C 42.668484 6 44 7.3315161 44 9 L 44 41 C 44 42.668484 42.668484 44 41 44 L 9 44 C 7.3315161 44 6 42.668484 6 41 L 6 9 C 6 7.3315161 7.3315161 6 9 6 z M 14 11.011719 C 12.904779 11.011719 11.919219 11.339079 11.189453 11.953125 C 10.459687 12.567171 10.011719 13.484511 10.011719 14.466797 C 10.011719 16.333977 11.631285 17.789609 13.691406 17.933594 A 0.98809878 0.98809878 0 0 0 13.695312 17.935547 A 0.98809878 0.98809878 0 0 0 14 17.988281 C 16.27301 17.988281 17.988281 16.396083 17.988281 14.466797 A 0.98809878 0.98809878 0 0 0 17.986328 14.414062 C 17.884577 12.513831 16.190443 11.011719 14 11.011719 z M 14 12.988281 C 15.392231 12.988281 15.94197 13.610038 16.001953 14.492188 C 15.989803 15.348434 15.460091 16.011719 14 16.011719 C 12.614594 16.011719 11.988281 15.302225 11.988281 14.466797 C 11.988281 14.049083 12.140703 13.734298 12.460938 13.464844 C 12.78117 13.19539 13.295221 12.988281 14 12.988281 z M 11 19 A 1.0001 1.0001 0 0 0 10 20 L 10 39 A 1.0001 1.0001 0 0 0 11 40 L 17 40 A 1.0001 1.0001 0 0 0 18 39 L 18 33.134766 L 18 20 A 1.0001 1.0001 0 0 0 17 19 L 11 19 z M 20 19 A 1.0001 1.0001 0 0 0 19 20 L 19 39 A 1.0001 1.0001 0 0 0 20 40 L 26 40 A 1.0001 1.0001 0 0 0 27 39 L 27 29 C 27 28.170333 27.226394 27.345035 27.625 26.804688 C 28.023606 26.264339 28.526466 25.940057 29.482422 25.957031 C 30.468166 25.973981 30.989999 26.311669 31.384766 26.841797 C 31.779532 27.371924 32 28.166667 32 29 L 32 39 A 1.0001 1.0001 0 0 0 33 40 L 39 40 A 1.0001 1.0001 0 0 0 40 39 L 40 28.261719 C 40 25.300181 39.122788 22.95433 37.619141 21.367188 C 36.115493 19.780044 34.024172 19 31.8125 19 C 29.710483 19 28.110853 19.704889 27 20.423828 L 27 20 A 1.0001 1.0001 0 0 0 26 19 L 20 19 z M 12 21 L 16 21 L 16 33.134766 L 16 38 L 12 38 L 12 21 z M 21 21 L 25 21 L 25 22.560547 A 1.0001 1.0001 0 0 0 26.798828 23.162109 C 26.798828 23.162109 28.369194 21 31.8125 21 C 33.565828 21 35.069366 21.582581 36.167969 22.742188 C 37.266572 23.901794 38 25.688257 38 28.261719 L 38 38 L 34 38 L 34 29 C 34 27.833333 33.720468 26.627107 32.990234 25.646484 C 32.260001 24.665862 31.031834 23.983076 29.517578 23.957031 C 27.995534 23.930001 26.747519 24.626988 26.015625 25.619141 C 25.283731 26.611293 25 27.829667 25 29 L 25 38 L 21 38 L 21 21 z"></path></svg></span>
-                <span class="contact-link-text">LinkedIn</span>
-            </a>
+        <div class="contact-layout">
+            <div class="contact-copy">
+                <h2>{{ strings.contact_h2 }}</h2>
+                <p class="contact-description">{{ strings.contact_description }}</p>
+                <div class="contact-info">
+                    <a class="contact-item" href="tel:+4512345678">
+                        <span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg></span>
+                        <span class="contact-link-text">+45 12 34 56 78</span>
+                    </a>
+                    <a class="contact-item" href="https://www.linkedin.com/in/simon-nyborg" target="_blank">
+                        <span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 50 50"><path d="M 9 4 C 6.2504839 4 4 6.2504839 4 9 L 4 41 C 4 43.749516 6.2504839 46 9 46 L 41 46 C 43.749516 46 46 43.749516 46 41 L 46 9 C 46 6.2504839 43.749516 4 41 4 L 9 4 z M 9 6 L 41 6 C 42.668484 6 44 7.3315161 44 9 L 44 41 C 44 42.668484 42.668484 44 41 44 L 9 44 C 7.3315161 44 6 42.668484 6 41 L 6 9 C 6 7.3315161 7.3315161 6 9 6 z M 14 11.011719 C 12.904779 11.011719 11.919219 11.339079 11.189453 11.953125 C 10.459687 12.567171 10.011719 13.484511 10.011719 14.466797 C 10.011719 16.333977 11.631285 17.789609 13.691406 17.933594 A 0.98809878 0.98809878 0 0 0 13.695312 17.935547 A 0.98809878 0.98809878 0 0 0 14 17.988281 C 16.27301 17.988281 17.988281 16.396083 17.988281 14.466797 A 0.98809878 0.98809878 0 0 0 17.986328 14.414062 C 17.884577 12.513831 16.190443 11.011719 14 11.011719 z M 14 12.988281 C 15.392231 12.988281 15.94197 13.610038 16.001953 14.492188 C 15.989803 15.348434 15.460091 16.011719 14 16.011719 C 12.614594 16.011719 11.988281 15.302225 11.988281 14.466797 C 11.988281 14.049083 12.140703 13.734298 12.460938 13.464844 C 12.78117 13.19539 13.295221 12.988281 14 12.988281 z M 11 19 A 1.0001 1.0001 0 0 0 10 20 L 10 39 A 1.0001 1.0001 0 0 0 11 40 L 17 40 A 1.0001 1.0001 0 0 0 18 39 L 18 33.134766 L 18 20 A 1.0001 1.0001 0 0 0 17 19 L 11 19 z M 20 19 A 1.0001 1.0001 0 0 0 19 20 L 19 39 A 1.0001 1.0001 0 0 0 20 40 L 26 40 A 1.0001 1.0001 0 0 0 27 39 L 27 29 C 27 28.170333 27.226394 27.345035 27.625 26.804688 C 28.023606 26.264339 28.526466 25.940057 29.482422 25.957031 C 30.468166 25.973981 30.989999 26.311669 31.384766 26.841797 C 31.779532 27.371924 32 28.166667 32 29 L 32 39 A 1.0001 1.0001 0 0 0 33 40 L 39 40 A 1.0001 1.0001 0 0 0 40 39 L 40 28.261719 C 40 25.300181 39.122788 22.95433 37.619141 21.367188 C 36.115493 19.780044 34.024172 19 31.8125 19 C 29.710483 19 28.110853 19.704889 27 20.423828 L 27 20 A 1.0001 1.0001 0 0 0 26 19 L 20 19 z M 12 21 L 16 21 L 16 33.134766 L 16 38 L 12 38 L 12 21 z M 21 21 L 25 21 L 25 22.560547 A 1.0001 1.0001 0 0 0 26.798828 23.162109 C 26.798828 23.162109 28.369194 21 31.8125 21 C 33.565828 21 35.069366 21.582581 36.167969 22.742188 C 37.266572 23.901794 38 25.688257 38 28.261719 L 38 38 L 34 38 L 34 29 C 34 27.833333 33.720468 26.627107 32.990234 25.646484 C 32.260001 24.665862 31.031834 23.983076 29.517578 23.957031 C 27.995534 23.930001 26.747519 24.626988 26.015625 25.619141 C 25.283731 26.611293 25 27.829667 25 29 L 25 38 L 21 38 L 21 21 z"></path></svg></span>
+                        <span class="contact-link-text">LinkedIn</span>
+                    </a>
+                    <a class="contact-item" href="mailto:simonhn02@gmail.com">
+                        <span class="contact-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg></span>
+                        <span class="contact-link-text">simonhn02@gmail.com</span>
+                    </a>
+                </div>
+            </div>
+            <div class="contact-visual">
+                <img src="/static/DTU-B112%20efterår.jpg" alt="{% if strings.lang_code == 'da' %}DTU B112 i efterårsstemning{% else %}DTU B112 in autumn{% endif %}">
+            </div>
         </div>
     </section>
     
@@ -379,9 +393,103 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }, { threshold: 0.3 });
-  document.querySelectorAll('.contact-item').forEach(box => {
+    document.querySelectorAll('.contact-item, .about-next-line, .section-guide-line, .about-path-line').forEach(box => {
     observer.observe(box);
   });
+});
+</script>
+<script>
+// Finder orange spor i Om Datara-billedet og forankrer den buede sti dynamisk.
+document.addEventListener('DOMContentLoaded', function() {
+    const media = document.querySelector('.about-datara-media');
+    const img = media ? media.querySelector('img') : null;
+
+    function updateAboutPathAnchor() {
+        if (!media || !img) {
+            return;
+        }
+        if (window.innerWidth <= 1000) {
+            media.style.removeProperty('--about-path-anchor-x');
+            return;
+        }
+        if (!img.naturalWidth || !img.naturalHeight) {
+            return;
+        }
+
+        const sampleWidth = 360;
+        const sampleHeight = Math.max(180, Math.round(sampleWidth * (img.naturalHeight / img.naturalWidth)));
+        const canvas = document.createElement('canvas');
+        canvas.width = sampleWidth;
+        canvas.height = sampleHeight;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        if (!ctx) {
+            return;
+        }
+
+        ctx.drawImage(img, 0, 0, sampleWidth, sampleHeight);
+        const imageData = ctx.getImageData(0, 0, sampleWidth, sampleHeight).data;
+
+        let weightedX = 0;
+        let weightTotal = 0;
+        const yStart = Math.floor(sampleHeight * 0.70);
+        const yEnd = Math.floor(sampleHeight * 0.98);
+
+        for (let y = yStart; y < yEnd; y += 1) {
+            let rowLeft = -1;
+            let rowRight = -1;
+            for (let x = 0; x < sampleWidth; x += 1) {
+                const idx = (y * sampleWidth + x) * 4;
+                const r = imageData[idx];
+                const g = imageData[idx + 1];
+                const b = imageData[idx + 2];
+
+                // Orange spor: høj r, mellem g, lav b.
+                if (r > 170 && g > 90 && g < 215 && b < 120 && (r - g) > 15) {
+                    if (rowLeft === -1) {
+                        rowLeft = x;
+                    }
+                    rowRight = x;
+                }
+            }
+            if (rowLeft >= 0 && rowRight >= 0 && rowRight > rowLeft) {
+                const rowSpan = rowRight - rowLeft;
+                const rowX = rowLeft + (rowSpan * 0.45);
+                const depth = (y - yStart) / Math.max(1, (yEnd - yStart));
+                const rowWeight = 0.35 + (depth * depth * 1.8);
+                weightedX += rowX * rowWeight;
+                weightTotal += rowWeight;
+            }
+        }
+
+        if (weightTotal <= 0) {
+            media.style.setProperty('--about-path-anchor-x', '52%');
+            return;
+        }
+
+        const srcX = weightedX / weightTotal;
+
+        const cw = media.clientWidth;
+        const ch = media.clientHeight;
+        const iw = img.naturalWidth;
+        const ih = img.naturalHeight;
+        const scale = Math.max(cw / iw, ch / ih);
+        const drawnW = iw * scale;
+        const offsetX = (cw - drawnW) / 2;
+
+        const srcRatioX = srcX / sampleWidth;
+        const screenX = (srcRatioX * iw * scale) + offsetX;
+        const clamped = Math.min(Math.max(screenX / cw, 0.06), 0.94);
+
+        media.style.setProperty('--about-path-anchor-x', `${(clamped * 100).toFixed(2)}%`);
+    }
+
+    if (img.complete) {
+        updateAboutPathAnchor();
+    } else {
+        img.addEventListener('load', updateAboutPathAnchor, { once: true });
+    }
+
+    window.addEventListener('resize', updateAboutPathAnchor);
 });
 </script>
 <script>
