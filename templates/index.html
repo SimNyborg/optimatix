@@ -16,7 +16,9 @@
     <link rel="shortcut icon" href="/static/favicon.ico">
     
     <link rel="stylesheet" href="/static/style.css?v=insights-gap-equalized-20260316">
+    <!-- Leaflet CSS til Indsigt-sektionen – midlertidigt deaktiveret
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor/leaflet/leaflet.css') }}">
+    -->
 </head>
 <body id="top">
     
@@ -152,6 +154,7 @@
         </div>
     </section>
 
+    <!-- INDSIGT-SEKTION MIDLERTIDIGT SKJULT – fjern kommentarerne for at aktivere den igen
     <section class="insights-section" id="insights">
         <div class="insights-container">
             <div class="insights-header">
@@ -200,13 +203,14 @@
                         <h3>{% if strings.lang_code == 'da' %}Leverancer i hele Danmark{% else %}Deliveries across Denmark{% endif %}</h3>
                         <p class="insight-description">{% if strings.lang_code == 'da' %}Byer hvor vi har leveret projekter.{% else %}Cities where we have delivered projects.{% endif %}</p>
                     </div>
-                    <!-- Map tiles via OpenStreetMap; skift til egen/udbyder ved høj trafik for at respektere fair-use. -->
-                    <div id="dk-map" aria-label="{% if strings.lang_code == 'da' %}Danmarkskort med markører{% else %}Denmark map with markers{% endif %}"></div>
+                    <!- - Map tiles via OpenStreetMap; skift til egen/udbyder ved høj trafik for at respektere fair-use. - ->
+                    <div id="dk-map" aria-label="{% if strings.lang_code == 'da' %}Danmarkskort med markører{% else %}Denmark map with markers {% endif %}"></div>
                     <p class="insight-fallback">{% if strings.lang_code == 'da' %}Kortet vises her, hvis JavaScript er slået til.{% else %}The map appears here if JavaScript is enabled.{% endif %}</p>
                 </div>
             </div>
         </div>
     </section>
+    SLUT PÅ INDSIGT-SEKTION -->
     <!-- Kontakt sektion -->
     <section class="contact-section" id="kontakt">
         <h2>{{ strings.contact_h2 }}</h2>
@@ -255,9 +259,11 @@
     </footer>
     {% endblock %}
 
+    <!-- Scripts til Indsigt-sektionen – midlertidigt deaktiveret
     <script defer src="{{ url_for('static', filename='vendor/chartjs/chart.umd.min.js') }}"></script>
     <script defer src="{{ url_for('static', filename='vendor/leaflet/leaflet.js') }}"></script>
     <script defer src="{{ url_for('static', filename='js/insights.js') }}"></script>
+    -->
     <script>console.log("Bottom scripts reached");</script>
 <script>
 let lastScrollY = window.scrollY;
