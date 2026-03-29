@@ -500,7 +500,7 @@ p {
 }
 .video-overlay h1 {
     font-family: 'Montserrat', Arial, Helvetica, sans-serif;
-    font-size: clamp(2.2rem, 6.2vw, 4.6rem);
+    font-size: clamp(2.1rem, 5.8vw, 4.2rem);
     font-weight: 800;
     margin: 0 0 0.32em 0;
     max-width: 760px;
@@ -512,7 +512,7 @@ p {
 
 @media (min-width: 1600px) {
     .video-overlay h1 {
-        font-size: clamp(2.2rem, 4.5vw, 3.9rem);
+        font-size: clamp(2.1rem, 4.2vw, 3.6rem);
     }
 }
 
@@ -746,9 +746,10 @@ html {
     scroll-snap-type: none;
 }
 .project-card {
-    min-width: 340px;
-    max-width: 400px;
-    flex: 0 0 auto;
+    width: 360px;
+    min-width: 360px;
+    max-width: 360px;
+    flex: 0 0 360px;
     background: var(--bg-primary);
     border-radius: 10px;
     box-shadow: 0 4px 24px var(--shadow-color);
@@ -1848,8 +1849,10 @@ html {
         margin-bottom: 22px;
     }
     .project-card {
-        min-width: 260px;
-        max-width: 320px;
+        width: 280px;
+        min-width: 280px;
+        max-width: 280px;
+        flex: 0 0 280px;
     }
     .project-card img {
         height: 140px;
