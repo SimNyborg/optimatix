@@ -510,22 +510,64 @@ p {
     color: var(--text-white);
 }
 
+#typewriter-h1 {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(6px);
+}
+
+#typewriter-h1.hero-title-ready {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    transition: opacity 0.9s cubic-bezier(0.2, 0.75, 0.2, 1),
+                transform 0.9s cubic-bezier(0.2, 0.75, 0.2, 1),
+                filter 0.9s cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+#typewriter-h1 .hero-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+    filter: blur(7px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.75, 0.2, 1),
+                transform 0.7s cubic-bezier(0.2, 0.75, 0.2, 1),
+                filter 0.7s cubic-bezier(0.2, 0.75, 0.2, 1);
+    transition-delay: var(--word-delay, 0ms);
+    will-change: opacity, transform, filter;
+}
+
+#typewriter-h1.hero-title-visible .hero-word {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
+
+#typewriter-p {
+    transition: opacity 0.9s cubic-bezier(0.2, 0.75, 0.2, 1),
+                transform 0.9s cubic-bezier(0.2, 0.75, 0.2, 1);
+    transform: translateY(10px);
+}
+
+#typewriter-p.hero-subtitle-visible {
+    opacity: 1 !important;
+    transform: translateY(0);
+}
+
 @media (min-width: 1600px) {
     .video-overlay h1 {
         font-size: clamp(2.1rem, 4.2vw, 3.6rem);
     }
 }
 
-/* Typewriter cursor effect */
-#typewriter-h1::after {
-    content: '|';
-    animation: blink 0.7s infinite;
-    margin-left: 2px;
-}
-
-@keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+    #typewriter-h1,
+    #typewriter-h1 .hero-word,
+    #typewriter-p {
+        transition: none !important;
+        transform: none !important;
+        filter: none !important;
+    }
 }
 
 .video-overlay p {
@@ -831,7 +873,7 @@ html {
     padding: 80px 0 80px 0;
 }
 .about-datara-layout {
-    width: calc(100% - ((var(--page-margin-line-offset) + 8px) * 2));
+    width: calc(100% - ((var(--page-margin-line-offset) + 20px) * 2));
     max-width: 1320px;
     margin: 0 auto;
     display: grid;
@@ -839,6 +881,12 @@ html {
     align-items: stretch;
     overflow: visible;
     background: transparent;
+}
+
+@media (min-width: 1400px) {
+    .about-datara-layout {
+        width: calc(100% - ((var(--page-margin-line-offset) + 46px) * 2));
+    }
 }
 .about-datara-media {
     height: clamp(420px, 38vw, 560px);
@@ -1205,13 +1253,19 @@ html {
     text-align: center;
 }
 .contact-layout {
-    width: calc(100% - ((var(--page-margin-line-offset) + 8px) * 2));
+    width: calc(100% - ((var(--page-margin-line-offset) + 20px) * 2));
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: minmax(340px, 0.95fr) minmax(360px, 1.05fr);
     gap: 0;
     align-items: stretch;
+}
+
+@media (min-width: 1400px) {
+    .contact-layout {
+        width: calc(100% - ((var(--page-margin-line-offset) + 46px) * 2));
+    }
 }
 .contact-copy {
     background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
